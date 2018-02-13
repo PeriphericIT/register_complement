@@ -1,0 +1,162 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+
+    <data>
+        <record id="register_complement_res_structure_form" model="ir.ui.view">
+            <field name="name">res.structure.form.complement</field>
+            <field name="model">res.structure</field>
+            <field name="type">form</field>
+            <field eval="18" name="priority"/>
+            <field name="arch" type="xml">
+                <form>
+                    <sheet>
+                        <!--<div class="oe_button_box" name="button_box">-->
+                        <!--<button name="toggle_active" type="object" class="oe_stat_button" icon="fa-archive">-->
+                        <!--<field name="active" widget="boolean_button" options="{&quot;terminology&quot;: &quot;archive&quot;}"/>-->
+                        <!--</button>-->
+                        <!--</div>-->
+                        <div class="oe_title">
+                            <h1>
+                                <field name="name" default_focus="1" placeholder="Nome da Estrutura" />
+                            </h1>
+                            <div class="o_row">
+                                <field name="partner_id" />
+                            </div>
+                        </div>
+                        <div>
+                            <field name="structure_line_ids" context="{'default_partner_id':partner_id,
+                                                                        'default_structure_id':id}"/>
+
+                        </div>
+
+
+                    </sheet>
+                </form>
+
+            </field>
+        </record>
+
+
+        <record id="register_complement_res_structure_tree" model="ir.ui.view">
+            <field name="name">res.structure.tree.complement</field>
+            <field name="model">res.structure</field>
+            <field name="type">form</field>
+            <field eval="18" name="priority"/>
+            <field name="arch" type="xml">
+                <tree>
+                    <field name="name"/>
+                    <field name="partner_id"/>
+                </tree>
+            </field>
+        </record>
+
+
+        <record id="register_complement_res_structure_lines_tree" model="ir.ui.view">
+            <field name="name">res.structure.lines.tree.complement</field>
+            <field name="model">res.structure.line</field>
+            <field name="type">form</field>
+            <field eval="18" name="priority"/>
+            <field name="arch" type="xml">
+                <tree>
+                    <field name="name" invisible="1"/>
+                    <field name="parent_partner_id" invisible="1"/>
+                    <field name="position" invisible="1"/>
+                    <field name="structure_id" invisible="1"/>
+                    <field name="structure_type_id" invisible="1"/>
+                    <field name="partner_id"/>
+                </tree>
+            </field>
+        </record>
+
+        <record id="register_complement_res_structure_lines_form" model="ir.ui.view">
+            <field name="name">res.structure.lines.form.complement</field>
+            <field name="model">res.structure.line</field>
+            <field name="type">form</field>
+            <field eval="18" name="priority"/>
+            <field name="arch" type="xml">
+                <form>
+                    <sheet>
+                        <group>
+                            <group>
+                                <field name="name" invisible="0"/>
+                                <field name="parent_partner_id" invisible="0"/>
+                                <field name="position" invisible="0"/>
+                            </group>
+                            <group>
+                                <field name="structure_id" invisible="0"/>
+                                <field name="structure_type_id" invisible="0"/>
+                                <field name="partner_id"/>
+                            </group>
+                        </group>
+                    </sheet>
+                </form>
+            </field>
+        </record>
+
+        <record id="register_complement_res_structure_line_action" model="ir.actions.act_window">
+            <field name="name">Linhas de Estrutura</field>
+            <field name="res_model">res.structure.line</field>
+            <field name="view_type">form</field>
+            <field name="view_mode">tree,form</field>
+            <field name="view_ids" eval="[(5, 0, 0),
+                (0, 0, {'view_mode': 'tree', 'view_id': ref('register_complement_res_structure_lines_tree')}),
+                (0, 0, {'view_mode': 'form', 'view_id': ref('register_complement_res_structure_lines_form')})]"/>
+            <field name="help" type="html">
+                <p>
+                    Linhas de Estrutura
+                </p>
+            </field>
+        </record>
+
+
+        <record id="register_complement_res_structure_action" model="ir.actions.act_window">
+            <field name="name">Estrutura Organizacional</field>
+            <field name="res_model">res.structure</field>
+            <field name="view_type">form</field>
+            <field name="view_mode">tree,form</field>
+            <field name="view_ids" eval="[(5, 0, 0),
+                (0, 0, {'view_mode': 'tree', 'view_id': ref('register_complement_res_structure_tree')}),
+                (0, 0, {'view_mode': 'form', 'view_id': ref('register_complement_res_structure_form')})]"/>
+            <field name="help" type="html">
+                <p>
+                    Estruturas Organizacionais
+                </p>
+            </field>
+        </record>
+
+        <menuitem action="register_complement_res_structure_action"
+                  id="register_complement_res_structure_action_menu"
+                  parent="menu_register_complemente_root_sessions" sequence="10"/>
+
+        <record id="register_complement_res_structure_type_tree" model="ir.ui.view">
+            <field name="name">res.structure.type.tree.complement</field>
+            <field name="model">res.structure.type</field>
+            <field name="type">form</field>
+            <field eval="18" name="priority"/>
+            <field name="arch" type="xml">
+                <tree editable="top">
+                    <field name="name"/>
+                </tree>
+            </field>
+        </record>
+
+        <record id="register_complement_res_structure_type_action" model="ir.actions.act_window">
+            <field name="name">Tipos de Estrutura</field>
+            <field name="res_model">res.structure.type</field>
+            <field name="view_type">form</field>
+            <field name="view_mode">tree,form</field>
+            <field name="view_ids" eval="[(5, 0, 0),
+                (0, 0, {'view_mode': 'tree', 'view_id': ref('register_complement_res_structure_type_tree')})]"/>
+            <field name="help" type="html">
+                <p>
+                    Tipos de Estruturas
+                </p>
+            </field>
+        </record>
+
+        <menuitem action="register_complement_res_structure_type_action"
+                  id="register_complement_res_structure_type_action_menu"
+                  parent="menu_register_complemente_root_sessions" sequence="12"/>
+
+    </data>
+</odoo>

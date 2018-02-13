@@ -19,11 +19,12 @@
     'version': '0.1',
 
     # any module necessary for this one to work correctly
-    'depends': ['base'],
+    'depends': ['base','br_base'],
 
     # always loaded
     'data': [
-        'views/res_partner_views.xml'
+        'views/res_partner_views.xml',
+        'views/res_structure_views.xml',
         #'views/task.xml',
 
     ],
