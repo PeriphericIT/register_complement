@@ -16,6 +16,11 @@ class ResPartner(models.Model):
 
     social_capital = fields.Float('Capital Social')
 
+    economic_group = fields.Char('Grupo Econômico')
+    social_denomination = fields.Char('Denominação Social')
+    short_name = fields.Char('Nome Abreviado')
+    company_type = fields.Char('Tipo de Empresa')
+    person_type = fields.Char('Tipo de Pessoa')
 
     @api.multi
     def review_structure(self):
