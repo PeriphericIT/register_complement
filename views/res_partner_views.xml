@@ -2,6 +2,7 @@
 <odoo>
 
     <data>
+        <!-- Form Views -->
         <record id="register_complement_res_partner_form" model="ir.ui.view">
             <field name="name">res.partner.form.complement</field>
             <field name="model">res.partner</field>
@@ -30,38 +31,40 @@
                             <field name="commercial_partner_id" invisible="1"/>
                             <field name="company_type" widget="radio" class="oe_edit_only" options="{'horizontal': true}"/>
                             <h1>
-                                <field name="name" default_focus="1" placeholder="Name" attrs="{'required' : [('type', '=', 'contact')]}"/>
+                                <field name="name" default_focus="1" placeholder="Nome Abreviado" attrs="{'required' : [('type', '=', 'contact')]}"/>
                             </h1>
+                            <h3>
+                                <field name="legal_name" placeholder="Razão Social" nolabel="1"/>
+                            </h3>
                             <div class="o_row">
                                 <field name="parent_id" placeholder="Company" domain="[('is_company', '=', True)]" context="{'default_is_company': True, 'default_supplier': supplier, 'default_customer': customer}" attrs="{'invisible': ['|', '&amp;', ('is_company','=', True),('parent_id', '=', False),('company_name', '!=', False),('company_name', '!=', '')]}"/>
                                 <field name="company_name" attrs="{'invisible': ['|', '|', ('company_name', '=', False), ('company_name', '=', ''), ('is_company', '=', True)]}"/>
                                 <button name="create_company" type="object" string="Create company" class="btn btn-sm oe_edit_only fa fa-external-link btn btn-link " attrs="{'invisible': ['|', '|', ('is_company','=', True), ('company_name', '=', ''), ('company_name', '=', False)]}"/>
                             </div>
-                            <h3 attrs="{'invisible': [('is_company', '=', False)]}">
-                                <field name="legal_name" placeholder="Razão Social" nolabel="1"/>
-                            </h3>
+
                             <h3>
                                 <field name="cnpj_cpf" placeholder="CNPJ/CPF" nolabel="1"/>
                             </h3>
                         </div>
 
                         <group>
+                            <br/>
+                            <h2 colspan="4">Dados Básicos</h2>
+                            <br/>
                             <group>
                                 <field name="type" attrs="{'invisible': [('parent_id','=', False)]}" groups="base.group_no_one"/>
-                                <label for="street" string="Address"/>
-                                <div class="o_address_format">
-                                    <div class="oe_edit_only">
-                                        <button name="open_parent" type="object" string="(edit)" class="oe_link" attrs="{'invisible': ['|', ('parent_id', '=', False), ('type', '!=', 'contact')]}"/>
-                                    </div>
-                                    <field name="street" placeholder="Street..." class="o_address_street" attrs="{'readonly': [('type', '=', 'contact'),('parent_id', '!=', False)]}"/>
-                                    <field name="street2" placeholder="Street 2..." class="o_address_street" attrs="{'readonly': [('type', '=', 'contact'),('parent_id', '!=', False)]}"/>
-                                    <field name="city" placeholder="City" class="o_address_city" attrs="{'readonly': [('type', '=', 'contact'),('parent_id', '!=', False)]}"/>
-                                    <field name="state_id" class="o_address_state" placeholder="State" options="{&quot;no_open&quot;: True}" attrs="{'readonly': [('type', '=', 'contact'),('parent_id', '!=', False)]}" context="{'country_id': country_id, 'zip': zip}"/>
-                                    <field name="zip" placeholder="ZIP" class="o_address_zip" attrs="{'readonly': [('type', '=', 'contact'),('parent_id', '!=', False)]}"/>
-                                    <field name="country_id" placeholder="Country" class="o_address_country" options="{&quot;no_open&quot;: True, &quot;no_create&quot;: True}" attrs="{'readonly': [('type', '=', 'contact'),('parent_id', '!=', False)]}"/>
-                                </div>
-                                <field name="register_type"/>
-                                <field name="social_capital"/>
+
+                                <field name="register_client" invisible="1"/>
+                                <field name="economic_group"/>
+                                <field name="social_denomination"/>
+
+                                <!-- <label for="street" string="Address"/> -->
+
+                                <field name="person_type"/>
+                                <field name="register_company_type"/>
+                                <field name="entry_date"/>
+                                <field name="departure_date"/>
+                                <field name="industry"/>
                             </group>
                             <group>
                                 <field name="function" placeholder="e.g. Sales Director" attrs="{'invisible': [('is_company','=', True)]}"/>
@@ -69,12 +72,27 @@
                                 <field name="mobile" widget="phone"/>
                                 <field name="user_ids" invisible="1"/>
                                 <field name="email" widget="email" context="{'gravatar_image': True}" attrs="{'required': [('user_ids','!=', [])]}"/>
-                                <field name="website" widget="url" placeholder="e.g. www.odoo.com"/>
-                                <field name="title" options="{&quot;no_open&quot;: True}" attrs="{'invisible': [('is_company', '=', True)]}"/>
-                                <field name="lang"/>
+                                <field name="website" widget="url"/>
+                                <field name="patrimony"/>
+                                <field name="ranking"/>
+
                             </group>
                         </group>
+                        <h2 colspan="4">
+                          <br/>
+                            Endereço Principal
+                          <br/><br/>
+                          <group colspan="4">
 
+                                <field name="street" string="Logradouro" class="o_address_street" attrs="{'readonly': [('type', '=', 'contact'),('parent_id', '!=', False)]}"/>
+                                <field name="street2" string="Número" class="o_address_street" attrs="{'readonly': [('type', '=', 'contact'),('parent_id', '!=', False)]}"/>
+                                <field name="zip" string="CEP" class="o_address_zip" attrs="{'readonly': [('type', '=', 'contact'),('parent_id', '!=', False)]}"/>
+                                <field name="city" string="Cidade" class="o_address_city" attrs="{'readonly': [('type', '=', 'contact'),('parent_id', '!=', False)]}"/>
+                                <field name="state_id" class="o_address_state" string="Estado" options="{&quot;no_open&quot;: True}" attrs="{'readonly': [('type', '=', 'contact'),('parent_id', '!=', False)]}" context="{'country_id': country_id, 'zip': zip}"/>
+                                <field name="country_id" string="País" class="o_address_country" options="{&quot;no_open&quot;: True, &quot;no_create&quot;: True}" attrs="{'readonly': [('type', '=', 'contact'),('parent_id', '!=', False)]}"/>
+
+                          </group>
+                        </h2>
                         <notebook colspan="4">
                             <page string="Contacts &amp; Addresses" autofocus="autofocus">
                                 <field name="child_ids" mode="kanban" context="{'default_parent_id': active_id, 'default_street': street, 'default_street2': street2, 'default_city': city, 'default_state_id': state_id, 'default_zip': zip, 'default_country_id': country_id, 'default_supplier': supplier, 'default_customer': customer, 'default_lang': lang,}">
@@ -202,7 +220,7 @@
             </field>
         </record>
         <record id="register_complement_res_partner_quotaholder_form" model="ir.ui.view">
-            <field name="name">res.partner.form.complement</field>
+            <field name="name">res.partner.form.complement.quotaholder</field>
             <field name="model">res.partner</field>
             <field name="type">form</field>
             <field eval="18" name="priority"/>
@@ -229,50 +247,58 @@
                             <field name="commercial_partner_id" invisible="1"/>
                             <field name="company_type" widget="radio" class="oe_edit_only" options="{'horizontal': true}"/>
                             <h1>
-                                <field name="name" default_focus="1" placeholder="Name" attrs="{'required' : [('type', '=', 'contact')]}"/>
+                                <field name="name" default_focus="1" placeholder="Nome Abreviado" attrs="{'required' : [('type', '=', 'contact')]}"/>
                             </h1>
+                            <h3>
+                                <field name="legal_name" placeholder="Razão Social" nolabel="1"/>
+                            </h3>
                             <div class="o_row">
                                 <field name="parent_id" placeholder="Company" domain="[('is_company', '=', True)]" context="{'default_is_company': True, 'default_supplier': supplier, 'default_customer': customer}" attrs="{'invisible': ['|', '&amp;', ('is_company','=', True),('parent_id', '=', False),('company_name', '!=', False),('company_name', '!=', '')]}"/>
                                 <field name="company_name" attrs="{'invisible': ['|', '|', ('company_name', '=', False), ('company_name', '=', ''), ('is_company', '=', True)]}"/>
                                 <button name="create_company" type="object" string="Create company" class="btn btn-sm oe_edit_only fa fa-external-link btn btn-link " attrs="{'invisible': ['|', '|', ('is_company','=', True), ('company_name', '=', ''), ('company_name', '=', False)]}"/>
                             </div>
-                            <h3 attrs="{'invisible': [('is_company', '=', False)]}">
-                                <field name="legal_name" placeholder="Razão Social" nolabel="1"/>
-                            </h3>
+
                             <h3>
                                 <field name="cnpj_cpf" placeholder="CNPJ/CPF" nolabel="1"/>
                             </h3>
                         </div>
 
                         <group>
+                            <br/>
+                            <h2 colspan="4">Dados Básicos</h2>
+                            <br/>
                             <group>
                                 <field name="type" attrs="{'invisible': [('parent_id','=', False)]}" groups="base.group_no_one"/>
-                                <label for="street" string="Address"/>
-                                <div class="o_address_format">
-                                    <div class="oe_edit_only">
-                                        <button name="open_parent" type="object" string="(edit)" class="oe_link" attrs="{'invisible': ['|', ('parent_id', '=', False), ('type', '!=', 'contact')]}"/>
-                                    </div>
-                                    <field name="street" placeholder="Street..." class="o_address_street" attrs="{'readonly': [('type', '=', 'contact'),('parent_id', '!=', False)]}"/>
-                                    <field name="street2" placeholder="Street 2..." class="o_address_street" attrs="{'readonly': [('type', '=', 'contact'),('parent_id', '!=', False)]}"/>
-                                    <field name="city" placeholder="City" class="o_address_city" attrs="{'readonly': [('type', '=', 'contact'),('parent_id', '!=', False)]}"/>
-                                    <field name="state_id" class="o_address_state" placeholder="State" options="{&quot;no_open&quot;: True}" attrs="{'readonly': [('type', '=', 'contact'),('parent_id', '!=', False)]}" context="{'country_id': country_id, 'zip': zip}"/>
-                                    <field name="zip" placeholder="ZIP" class="o_address_zip" attrs="{'readonly': [('type', '=', 'contact'),('parent_id', '!=', False)]}"/>
-                                    <field name="country_id" placeholder="Country" class="o_address_country" options="{&quot;no_open&quot;: True, &quot;no_create&quot;: True}" attrs="{'readonly': [('type', '=', 'contact'),('parent_id', '!=', False)]}"/>
-                                </div>
-                                <field name="register_type"/>
-                                <field name="social_capital"/>
+                                <field name="register_quotaholder" invisible="1"/>
+                                <field name="rg_number"/>
+                                <field name="shareholder_type"/>
+                                <field name="profession"/>
+                                <field name="marital_status"/>
                             </group>
                             <group>
-                                <field name="function" placeholder="e.g. Sales Director" attrs="{'invisible': [('is_company','=', True)]}"/>
+                                <field name="function" placeholder="ex: Diretor" attrs="{'invisible': [('is_company','=', True)]}"/>
                                 <field name="phone" widget="phone"/>
                                 <field name="mobile" widget="phone"/>
                                 <field name="user_ids" invisible="1"/>
                                 <field name="email" widget="email" context="{'gravatar_image': True}" attrs="{'required': [('user_ids','!=', [])]}"/>
-                                <field name="website" widget="url" placeholder="e.g. www.odoo.com"/>
-                                <field name="title" options="{&quot;no_open&quot;: True}" attrs="{'invisible': [('is_company', '=', True)]}"/>
-                                <field name="lang"/>
+                                <field name="website" widget="url"/>
                             </group>
                         </group>
+                        <h2 colspan="4">
+                          <br/>
+                            Endereço Principal
+                          <br/><br/>
+                          <group colspan="4">
+
+                                <field name="street" string="Logradouro" class="o_address_street" attrs="{'readonly': [('type', '=', 'contact'),('parent_id', '!=', False)]}"/>
+                                <field name="street2" string="Número" class="o_address_street" attrs="{'readonly': [('type', '=', 'contact'),('parent_id', '!=', False)]}"/>
+                                <field name="zip" string="CEP" class="o_address_zip" attrs="{'readonly': [('type', '=', 'contact'),('parent_id', '!=', False)]}"/>
+                                <field name="city" string="Cidade" class="o_address_city" attrs="{'readonly': [('type', '=', 'contact'),('parent_id', '!=', False)]}"/>
+                                <field name="state_id" class="o_address_state" string="Estado" options="{&quot;no_open&quot;: True}" attrs="{'readonly': [('type', '=', 'contact'),('parent_id', '!=', False)]}" context="{'country_id': country_id, 'zip': zip}"/>
+                                <field name="country_id" string="País" class="o_address_country" options="{&quot;no_open&quot;: True, &quot;no_create&quot;: True}" attrs="{'readonly': [('type', '=', 'contact'),('parent_id', '!=', False)]}"/>
+
+                          </group>
+                        </h2>
 
                         <notebook colspan="4">
                             <page string="Contacts &amp; Addresses" autofocus="autofocus">
@@ -401,7 +427,7 @@
             </field>
         </record>
         <record id="register_complement_res_partner_market_participant_form" model="ir.ui.view">
-            <field name="name">res.partner.form.complement</field>
+            <field name="name">res.partner.form.complement.market.participant</field>
             <field name="model">res.partner</field>
             <field name="type">form</field>
             <field eval="18" name="priority"/>
@@ -428,51 +454,58 @@
                             <field name="commercial_partner_id" invisible="1"/>
                             <field name="company_type" widget="radio" class="oe_edit_only" options="{'horizontal': true}"/>
                             <h1>
-                                <field name="name" default_focus="1" placeholder="Name" attrs="{'required' : [('type', '=', 'contact')]}"/>
+                                <field name="name" default_focus="1" placeholder="Nome Abreviado" attrs="{'required' : [('type', '=', 'contact')]}"/>
                             </h1>
+                            <h3>
+                                <field name="legal_name" placeholder="Razão Social" nolabel="1"/>
+                            </h3>
                             <div class="o_row">
                                 <field name="parent_id" placeholder="Company" domain="[('is_company', '=', True)]" context="{'default_is_company': True, 'default_supplier': supplier, 'default_customer': customer}" attrs="{'invisible': ['|', '&amp;', ('is_company','=', True),('parent_id', '=', False),('company_name', '!=', False),('company_name', '!=', '')]}"/>
                                 <field name="company_name" attrs="{'invisible': ['|', '|', ('company_name', '=', False), ('company_name', '=', ''), ('is_company', '=', True)]}"/>
                                 <button name="create_company" type="object" string="Create company" class="btn btn-sm oe_edit_only fa fa-external-link btn btn-link " attrs="{'invisible': ['|', '|', ('is_company','=', True), ('company_name', '=', ''), ('company_name', '=', False)]}"/>
                             </div>
-                            <h3 attrs="{'invisible': [('is_company', '=', False)]}">
-                                <field name="legal_name" placeholder="Razão Social" nolabel="1"/>
-                            </h3>
+
                             <h3>
                                 <field name="cnpj_cpf" placeholder="CNPJ/CPF" nolabel="1"/>
                             </h3>
                         </div>
 
                         <group>
+                            <br/>
+                            <h2 colspan="4">Dados Básicos</h2>
+                            <br/>
                             <group>
                                 <field name="type" attrs="{'invisible': [('parent_id','=', False)]}" groups="base.group_no_one"/>
-                                <label for="street" string="Address"/>
-                                <div class="o_address_format">
-                                    <div class="oe_edit_only">
-                                        <button name="open_parent" type="object" string="(edit)" class="oe_link" attrs="{'invisible': ['|', ('parent_id', '=', False), ('type', '!=', 'contact')]}"/>
-                                    </div>
-                                    <field name="street" placeholder="Street..." class="o_address_street" attrs="{'readonly': [('type', '=', 'contact'),('parent_id', '!=', False)]}"/>
-                                    <field name="street2" placeholder="Street 2..." class="o_address_street" attrs="{'readonly': [('type', '=', 'contact'),('parent_id', '!=', False)]}"/>
-                                    <field name="city" placeholder="City" class="o_address_city" attrs="{'readonly': [('type', '=', 'contact'),('parent_id', '!=', False)]}"/>
-                                    <field name="state_id" class="o_address_state" placeholder="State" options="{&quot;no_open&quot;: True}" attrs="{'readonly': [('type', '=', 'contact'),('parent_id', '!=', False)]}" context="{'country_id': country_id, 'zip': zip}"/>
-                                    <field name="zip" placeholder="ZIP" class="o_address_zip" attrs="{'readonly': [('type', '=', 'contact'),('parent_id', '!=', False)]}"/>
-                                    <field name="country_id" placeholder="Country" class="o_address_country" options="{&quot;no_open&quot;: True, &quot;no_create&quot;: True}" attrs="{'readonly': [('type', '=', 'contact'),('parent_id', '!=', False)]}"/>
-                                </div>
-                                <field name="register_type"/>
-                                <field name="social_capital"/>
+                                <field name="register_market_participant" invisible="1"/>
+                                <field name="social_denomination"/>
+                                <field name="comercial_denomination"/>
+                                <field name="registry_date"/>
+                                <field name="economic_activity"/>
+                                <field name="legal_nature"/>
                             </group>
                             <group>
-                                <field name="function" placeholder="e.g. Sales Director" attrs="{'invisible': [('is_company','=', True)]}"/>
                                 <field name="phone" widget="phone"/>
                                 <field name="mobile" widget="phone"/>
                                 <field name="user_ids" invisible="1"/>
                                 <field name="email" widget="email" context="{'gravatar_image': True}" attrs="{'required': [('user_ids','!=', [])]}"/>
-                                <field name="website" widget="url" placeholder="e.g. www.odoo.com"/>
-                                <field name="title" options="{&quot;no_open&quot;: True}" attrs="{'invisible': [('is_company', '=', True)]}"/>
-                                <field name="lang"/>
+                                <field name="website" widget="url"/>
                             </group>
                         </group>
+                        <h2 colspan="4">
+                          <br/>
+                            Endereço Principal
+                          <br/><br/>
+                          <group colspan="4">
 
+                                <field name="street" string="Logradouro" class="o_address_street" attrs="{'readonly': [('type', '=', 'contact'),('parent_id', '!=', False)]}"/>
+                                <field name="street2" string="Número" class="o_address_street" attrs="{'readonly': [('type', '=', 'contact'),('parent_id', '!=', False)]}"/>
+                                <field name="zip" string="CEP" class="o_address_zip" attrs="{'readonly': [('type', '=', 'contact'),('parent_id', '!=', False)]}"/>
+                                <field name="city" string="Cidade" class="o_address_city" attrs="{'readonly': [('type', '=', 'contact'),('parent_id', '!=', False)]}"/>
+                                <field name="state_id" class="o_address_state" string="Estado" options="{&quot;no_open&quot;: True}" attrs="{'readonly': [('type', '=', 'contact'),('parent_id', '!=', False)]}" context="{'country_id': country_id, 'zip': zip}"/>
+                                <field name="country_id" string="País" class="o_address_country" options="{&quot;no_open&quot;: True, &quot;no_create&quot;: True}" attrs="{'readonly': [('type', '=', 'contact'),('parent_id', '!=', False)]}"/>
+
+                          </group>
+                        </h2>
                         <notebook colspan="4">
                             <page string="Contacts &amp; Addresses" autofocus="autofocus">
                                 <field name="child_ids" mode="kanban" context="{'default_parent_id': active_id, 'default_street': street, 'default_street2': street2, 'default_city': city, 'default_state_id': state_id, 'default_zip': zip, 'default_country_id': country_id, 'default_supplier': supplier, 'default_customer': customer, 'default_lang': lang,}">
@@ -600,18 +633,50 @@
             </field>
         </record>
 
+        <!-- Tree Views -->
+        <record model="ir.ui.view" id="register_complement_res_partner_tree">
+            <field name="name">res.partner.tree.complement</field>
+            <field name="model">res.partner</field>
+            <field name="arch" type="xml">
+                <tree>
+                  <field name="display_name"/>
+                  <field name="cnpj_cpf"/>
+                </tree>
+            </field>
+        </record>
+        <record model="ir.ui.view" id="register_complement_res_partner_quotaholder_tree">
+            <field name="name">res.partner.tree.complement.quotaholder</field>
+            <field name="model">res.partner</field>
+            <field name="arch" type="xml">
+                <tree>
+                  <field name="display_name"/>
+                  <field name="cnpj_cpf"/>
+                </tree>
+            </field>
+        </record>
+        <record model="ir.ui.view" id="register_complement_res_partner_market_participant_tree">
+            <field name="name">res.partner.tree.complement.market.participant</field>
+            <field name="model">res.partner</field>
+            <field name="arch" type="xml">
+                <tree>
+                  <field name="display_name"/>
+                  <field name="cnpj_cpf"/>
+                </tree>
+            </field>
+        </record>
 
 
+        <!-- Actions -->
         <record id="register_complement_action" model="ir.actions.act_window">
             <field name="name">Cadastro de Cliente</field>
             <field name="res_model">res.partner</field>
             <field name="view_type">form</field>
             <field name="view_mode">tree,form</field>
             <field name="view_ids" eval="[(5, 0, 0),
-                (0, 0, {'view_mode': 'tree', 'view_id': ref('base.view_partner_tree')}),
+                (0, 0, {'view_mode': 'tree', 'view_id': ref('register_complement_res_partner_tree')}),
                 (0, 0, {'view_mode': 'form', 'view_id': ref('register_complement_res_partner_form')})]"/>
-            <!-- <field name="domain">[('is_company','=',False),('tecnico','=',True)]</field> -->
-            <!-- <field name="context">{'default_tecnico':True, 'default_is_company':False}</field> -->
+            <field name="domain">[('register_client','=',True)]</field>
+            <field name="context">{'default_register_client':True}</field>
             <field name="help" type="html">
                 <p>
                     Cadastro de Clientes
@@ -624,10 +689,10 @@
             <field name="view_type">form</field>
             <field name="view_mode">tree,form</field>
             <field name="view_ids" eval="[(5, 0, 0),
-                (0, 0, {'view_mode': 'tree', 'view_id': ref('base.view_partner_tree')}),
-                (0, 0, {'view_mode': 'form', 'view_id': ref('register_complement_res_partner_form')})]"/>
-            <!-- <field name="domain">[('is_company','=',False),('tecnico','=',True)]</field> -->
-            <!-- <field name="context">{'default_tecnico':True, 'default_is_company':False}</field> -->
+                (0, 0, {'view_mode': 'tree', 'view_id': ref('register_complement_res_partner_quotaholder_tree')}),
+                (0, 0, {'view_mode': 'form', 'view_id': ref('register_complement_res_partner_quotaholder_form')})]"/>
+            <field name="domain">[('register_quotaholder','=',True)]</field>
+            <field name="context">{'default_register_quotaholder':True}</field>
             <field name="help" type="html">
                 <p>
                     Cadastro de Cotistas
@@ -640,19 +705,20 @@
             <field name="view_type">form</field>
             <field name="view_mode">tree,form</field>
             <field name="view_ids" eval="[(5, 0, 0),
-                (0, 0, {'view_mode': 'tree', 'view_id': ref('base.view_partner_tree')}),
-                (0, 0, {'view_mode': 'form', 'view_id': ref('register_complement_res_partner_form')})]"/>
-            <!-- <field name="domain">[('is_company','=',False),('tecnico','=',True)]</field> -->
-            <!-- <field name="context">{'default_tecnico':True, 'default_is_company':False}</field> -->
+                (0, 0, {'view_mode': 'tree', 'view_id': ref('register_complement_res_partner_market_participant_tree')}),
+                (0, 0, {'view_mode': 'form', 'view_id': ref('register_complement_res_partner_market_participant_form')})]"/>
+            <field name="domain">[('register_market_participant','=',True)]</field>
+            <field name="context">{'default_register_market_participant':True}</field>
             <field name="help" type="html">
                 <p>
-                    Cadastro de Patr
+                    Cadastro de Participantes de Mercado
                 </p>
             </field>
         </record>
 
 
 
+        <!-- MenuItens -->
         <menuitem id="register_complement_root" name="Cadastro Complementar"/>
 
         <menuitem id="menu_register_complemente_root_sessions"

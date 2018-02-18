@@ -1,6 +1,7 @@
 # -*- coding: utf-8 -*-
 
 from odoo import models, fields, api
+from datetime import datetime
 import requests
 import re
 
@@ -18,9 +19,33 @@ class ResPartner(models.Model):
 
     economic_group = fields.Char('Grupo Econômico')
     social_denomination = fields.Char('Denominação Social')
-    short_name = fields.Char('Nome Abreviado')
-    company_type = fields.Char('Tipo de Empresa')
+    comercial_denomination = fields.Char('Denominação Comercial')
+    register_company_type = fields.Char('Tipo de Empresa')
     person_type = fields.Char('Tipo de Pessoa')
+    registry_date = fields.Date('Data de Registro')
+    entry_date = fields.Date('Data de Entrada')
+    departure_date = fields.Date('Data de Saída')
+    economic_activity = fields.Char('Atividade Econômica')
+    legal_nature = fields.Char('Natureza Jurídica')
+    industry = fields.Char('Ramo de Atividade')
+    patrimony = fields.Char('Patrimônio')
+    ranking = fields.Char('Ranking')
+    shareholder_type = fields.Char('Tipo de Cotista')
+    profession = fields.Char('Profissão')
+    rg_number = fields.Char('Número do RG')
+    marital_status = fields.Selection([
+    ('single','Solteiro(a)'),
+    ('married','Casado(a)'),
+    ('divorced','Divorciado(a)'),
+    ('widower','Viúvo(a)'),
+    ('separate','Separado(a)'),
+    ], 'Estado Civíl')
+
+    #Booleans para checagem do tipo de Cadastro
+    register_client = fields.Boolean("Cliente")
+    register_quotaholder = fields.Boolean("Cotista")
+    register_market_participant = fields.Boolean("Participante do Mercado")
+
 
     @api.multi
     def review_structure(self):
