@@ -25,6 +25,7 @@
     'data': [
         'views/res_partner_views.xml',
         'views/res_structure_views.xml',
+        'views/res_cnab_views.xml',
         #'views/task.xml',
 
     ],
