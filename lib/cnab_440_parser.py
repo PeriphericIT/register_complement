@@ -9,10 +9,12 @@ class CNAB440():
 
     def print_cnabs(self):
         for item in self.cnabs:
-            for i in item:
-                print(i.__dict__)
-                # for k,v in i.__dict__.items():
-                #     print('%s\t\t%s' %(k,v))
+            for k,v in item.items():
+                if k == 'header' or k == 'trailler':
+                    print(v.__dict__)
+                else:
+                    for val in v:
+                        print(val.__dict__)
 
 
     def receive_cnab_from_string(self, cnab_string):
@@ -43,23 +45,26 @@ class CNAB440():
     def receive_cnab(self, cnab_file):
         self.file = cnab_file
         counter = 1
-        self.cnab = []
+        self.cnab = {'header': '',
+                     'registro': [],
+                     'trailler': ''}
 
         for line in cnab_file:
             if line[0] == '0':
                 header = CNAB440_Header(line)
-                self.cnab.append(header)
+                self.cnab.update({'header': header})
 
             if line[0] == '1':
                 registro = CNAB440_Registro(line)
-                self.cnab.append(registro)
+                self.cnab['registro'].append(registro)
 
             if line[0] == '9':
                 trailler = CNAB440_Trailler(line)
-                self.cnab.append(trailler)
-
+                self.cnab.update({'trailler': trailler})
                 self.cnabs.append(self.cnab)
-                self.cnab = []
+                self.cnab = {'header': '',
+                             'registro': [],
+                             'trailler': ''}
                 counter += 1
 
 
@@ -130,8 +135,6 @@ class CNAB440_Registro():
         cnab_cedente = [334,394]
         cnab_chave_nota = [394,438]
         cnab_nro_sequencial_registro = [438,444]
-
-
 
         self.cnab_id_registro = line[cnab_id_registro[0]:cnab_id_registro[1]]
         self.cnab_coobrigacao = line[cnab_coobrigacao[0]:cnab_coobrigacao[1]]

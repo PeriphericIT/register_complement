@@ -1,18 +1,21 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <odoo>
     <data>
-      <record id="register_complement_res_cnab_form" model="ir.ui.view">
+        <record id="register_complement_res_cnab_form" model="ir.ui.view">
             <field name="name">res.cnab.form</field>
             <field name="model">res.cnab</field>
             <field name="type">form</field>
             <field eval="18" name="priority"/>
             <field name="arch" type="xml">
                 <form>
+                    <header>
+                        <field name="state" widget="statusbar" />
+                    </header>
                     <sheet>
                         <div class="oe_button_box" name="button_box">
-                        <button name="import_cnab_file" type="object" class="oe_stat_button" icon="fa-archive">
-                        Importar Cnab
-                        </button>
+                            <button name="import_cnab_file" type="object" class="oe_stat_button" icon="fa-archive">
+                                Importar Cnab
+                            </button>
                         </div>
                         <div class="oe_title">
                             <h1>
@@ -41,6 +44,132 @@
                 </form>
             </field>
         </record>
+
+
+        <record id="register_complement_res_cnab_header_form" model="ir.ui.view">
+            <field name="name">res.cnab.header.import.form</field>
+            <field name="model">res.cnab.header.import</field>
+            <field name="type">form</field>
+            <field eval="18" name="priority"/>
+            <field name="arch" type="xml">
+                <form>
+                    <sheet>
+                        <div class="oe_title">
+                            <field name="name" default_focus="1" placeholder="Header" />
+                        </div>
+
+                        <group>
+                            <group>
+                                <field name="cod_servico"/>
+                                <field name="codigo_originador"/>
+                                <field name="nome_originador"/>
+                                <field name="nro_banco"/>
+                                <field name="nome_banco"/>
+                                <field name="data_grav_arquivo"/>
+                                <field name="block_id"/>
+                            </group>
+                        </group>
+                    </sheet>
+                </form>
+            </field>
+        </record>
+
+        <record id="register_complement_res_cnab_trailler_form" model="ir.ui.view">
+            <field name="name">res.cnab.trailler.import.form</field>
+            <field name="model">res.cnab.trailler.import</field>
+            <field name="type">form</field>
+            <field eval="18" name="priority"/>
+            <field name="arch" type="xml">
+                <form>
+                    <sheet>
+                        <div class="oe_title">
+                            <field name="name" default_focus="1" placeholder="Trailler" />
+                        </div>
+                        <group>
+                            <group>
+                                <field name="trailler_id_registro"/>
+                                <field name="trailler_nro_seq_reg"/>
+                                <field name="block_id"/>
+                            </group>
+                        </group>
+                    </sheet>
+                </form>
+            </field>
+        </record>
+
+        <record id="register_complement_res_cnab_block_form" model="ir.ui.view">
+            <field name="name">res.cnab.block.form</field>
+            <field name="model">res.cnab.block</field>
+            <field name="type">form</field>
+            <field eval="18" name="priority"/>
+            <field name="arch" type="xml">
+                <form>
+                    <sheet>
+                        <div class="oe_title">
+                            <field name="name" default_focus="1" placeholder="Bloco" />
+                        </div>
+                        <group>
+                            <field name="cnab_id"/>
+                            <field name="date_import"/>
+                            <field name="header_id"/>
+                        </group>
+                        <div>
+                            <field name="cnab_lines_ids">
+                                <tree>
+                                    <field name="cnab_id_registro"/>
+                                    <field name="cnab_id_tipo_inscr_sacado"/>
+                                    <field name="cnab_cnpj_cpf"/>
+                                </tree>
+                            </field>
+                        </div>
+                        <group>
+                            <field name="trailler_id"/>
+                        </group>
+                    </sheet>
+                </form>
+            </field>
+        </record>
+
+        <record id="register_complement_res_cnab_line_form" model="ir.ui.view">
+            <field name="name">res.cnab.import.line.form</field>
+            <field name="model">res.cnab.import.line</field>
+            <field name="type">form</field>
+            <field eval="18" name="priority"/>
+            <field name="arch" type="xml">
+                <form>
+                    <sheet>
+                        <div class="oe_title">
+                            <field name="name" default_focus="1" placeholder="Trailler" />
+                        </div>
+                        <group>
+                            <field name="cnab_id_registro"/>
+                            <field name="cnab_cnpj_cpf"/>
+                            <field name="cnab_nome_sacado"/>
+                            <field name="cnab_end_sacado"/>
+                            <field name="cnab_id_tipo_inscr_sacado"/>
+                            <field name="cnab_coobrigacao"/>
+                            <field name="cnab_caract_especial"/>
+                            <field name="cnab_modalidade_operacao"/>
+                            <field name="cnab_natureza_operacao"/>
+                            <field name="cnab_origem_recurso"/>
+                            <field name="cnab_classe_risco_operacao"/>
+                            <field name="cnab_nro_controle_participante"/>
+                            <field name="cnab_nro_banco"/>
+                            <field name="cnab_valor_pago"/>
+                            <field name="cnab_data_liquidacao"/>
+                            <field name="cnab_id_ocorrencia"/>
+                            <field name="cnab_nro_documento"/>
+                            <field name="cnab_data_vencimento"/>
+                            <field name="cnab_valor_titulo"/>
+                            <field name="cnab_banco_encarregado_cobranca"/>
+                            <field name="block_id"/>
+
+                        </group>
+                    </sheet>
+                </form>
+            </field>
+        </record>
+
 
         <record id="register_complement_res_cnab_tree" model="ir.ui.view">
             <field name="name">res.cnab.tree</field>
